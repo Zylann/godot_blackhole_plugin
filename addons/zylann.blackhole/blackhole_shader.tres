@@ -1,0 +1,6 @@
+[gd_resource type="CanvasItemShader" format=1]
+
+[resource]
+
+_code = { "fragment":"\n// Be gentle on this one\nuniform float strength = 0.01;\nuniform float black_radius = 0.65;\n\n// Get direction and distance to the black hole center\nvec2 diff = vec2(0.5, 0.5) - vec2(UV.x, 1.0-UV.y);\nfloat d = length(diff)*2;\nvec2 dir = normalize(diff);\nfloat f = clamp(1-d, 0, 1);\n\n// This is a 0..1 value that will nullify the effect around the bounds of the effect,\n// for a seamless transition between the effect\'s area and the unaffected world pixels.\nfloat shelf = smoothstep(0, 1, f);\n\n// Calculate displacement amount\nfloat displacement = strength / (d*d + 0.01);\n\n// Calculate distorted screen-space texture coordinates\nvec2 uv = SCREEN_UV + dir * (displacement * shelf);\n\n// Output pixels from the screen using distorted UVs\nvec3 col = texscreen(uv);\nCOLOR.rgb = mix(col, vec3(0,0,0), smoothstep(black_radius-0.01, black_radius+0.01, f));\n//COLOR.rgb = vec3(f, 0, 0);\n", "fragment_ofs":0, "light":"", "light_ofs":0, "vertex":"", "vertex_ofs":0 }
+
