@@ -1,4 +1,4 @@
-Black hole 2D effect for Godot Engine 2.1
+Updated Black hole 2D effect for Godot Engine 3.1
 ------------------------------------------
 
 ![Editor screenshot](icon.png)
